@@ -1,0 +1,17 @@
+{
+  "name": "pusher",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc -b && node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "dependencies": {
+    "redis-stream": "workspace:*",
+    "@repo/db": "workspace:*"
+  },
+  "license": "ISC",
+  "description": ""
+}
