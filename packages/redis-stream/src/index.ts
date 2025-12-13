@@ -7,7 +7,7 @@ client.on?.("error", (err: Error) => console.log("Redis Client Error", err));
 await client.connect();
 console.log("Redis Client Connected");
 
-type websiteEvent = { url: String, id: String };
+type websiteEvent = { url: string, id: string };
 
 export async function xAdd({ url, id }: websiteEvent) {
     await client.xAdd('betteruptime:website', '*', {
@@ -18,6 +18,9 @@ export async function xAdd({ url, id }: websiteEvent) {
 
 export async function BulkAdd(websites: websiteEvent[]) {
     for (const website of websites) {
-        await xAdd(website);
+        await xAdd({
+            url: website.url,
+            id: website.id
+        });
     }
 }
