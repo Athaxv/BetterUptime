@@ -1,6 +1,6 @@
 import express from "express";
 import { db as prisma } from "@repo/db";
-import { AuthSchema } from "./types.js";
+import { AuthSchema, LoginSchema } from "./types.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { authMiddleware } from "./middleware.js";
@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 
 app.post('/signin', async (req, res) => {
-    const data = AuthSchema.safeParse(req.body.data);
+    const data = LoginSchema.safeParse(req.body);
     if (!data.success) {
       res.status(400).json({ message: "Invalid request body" });
       return;
@@ -36,7 +36,9 @@ app.post('/signin', async (req, res) => {
       return;
     }
 
-    const jwtSecret = process.env.JWT_SECRET;
+    // const jwtSecret = process.env.JWT_SECRET;
+    const jwtSecret = "test";
+
     if (!jwtSecret) {
       throw new Error("Unable to find JWT_SECRET");
     }
@@ -51,7 +53,7 @@ app.post('/signin', async (req, res) => {
 })
 
 app.post('/signup', async (req, res) => {
-    const data = AuthSchema.safeParse(req.body.data);
+    const data = AuthSchema.safeParse(req.body);
     if (!data.success) {
       res.status(400).json({ message: "Invalid request body" });
       return;
